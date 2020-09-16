@@ -1,0 +1,111 @@
+﻿@model TixGurusWeb.Models.EventSeatBookingModel
+@{
+    ViewBag.Title = "Booking Proceed";
+}
+@{
+    List<SelectListItem> cardTypeList = new List<SelectListItem>();
+    cardTypeList.Add(new SelectListItem { Text = "Visa" });
+    cardTypeList.Add(new SelectListItem { Text = "Master" });
+    cardTypeList.Add(new SelectListItem { Text = "Amex" });
+}
+<h2>Booking Proceed</h2>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+@using (Html.BeginForm("BookingProceed", "BookingConfirm", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4></h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.SelectedLevel)
+        @Html.HiddenFor(model => model.SelectedRow)
+        @Html.HiddenFor(model => model.SeatBookingID)
+        @Html.HiddenFor(model => model.SeatNumber)
+
+        <h4>Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Event</dt>
+            <dd>@Html.DisplayFor(model => model.EventDetails.EventTitle)</dd>
+            @Html.HiddenFor(model => model.EventDetails.EventID)
+            <dt>Location</dt>
+            <dd>@Html.DisplayFor(model => model.EventDetails.EventLocation)</dd>
+            <dt>Date</dt>
+            <dd>@Html.DisplayFor(model => model.EventDetails.EventDate)</dd>
+            <dt>Description</dt>
+            <dd>@Html.DisplayFor(model => model.EventDetails.EventDescription)</dd>
+            <dt>Selected Seat</dt>
+            <dd>Level:@Html.DisplayFor(model => model.SelectedLevel) | Row:@Html.DisplayFor(model => model.SelectedRow) | Seat:@Html.DisplayFor(model => model.SeatNumber)</dd>
+            <dt>Ticket Price ($)</dt>
+            <dd>@Html.DisplayFor(model => model.ticketPrice)</dd>
+            @Html.HiddenFor(model => model.ticketPrice)
+
+            @if (Model.UserName != null && Model.UserName != "")
+            {
+                <dt>User Name</dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+            }
+        </dl>
+
+        <div class="form-group">
+            <h4>Your Payment Details</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                @if (Model.UserName != null && Model.UserName != "")
+                {
+                    <dt> Name</dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(model => model.UserName)
+                        @Html.HiddenFor(model => model.DisplayName, new { @Value = Model.UserName })
+
+                    </dd>
+                }
+                else
+                {
+                    <dt>Name</dt>
+                    <dd>
+                        @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.DisplayName, new { @Value = Model.DisplayName })
+                    </dd>
+                }
+            </dl>
+            @if (!Model.EventDetails.EventLocation.ToUpper().Contains("MUSEUM"))
+            {
+                <dl class="dl-horizontal">
+                    <dt>Card type</dt>
+                    <dd>
+                        @Html.DropDownListFor(model => model.CardType, cardTypeList, "-- Select Card --", new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.CardType)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>Card Number</dt>
+                    <dd>
+                        @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CardNumber, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.CardNumber)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>Security Code</dt>
+                    <dd>
+                        @Html.EditorFor(model => model.SecurityNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SecurityNumber, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.SecurityNumber)
+                    </dd>
+                </dl>
+            }
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Confirm & Print" class="btn btn-default" />
+        </div>
+    </div>
+}

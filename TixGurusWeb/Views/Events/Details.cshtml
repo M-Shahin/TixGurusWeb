@@ -1,0 +1,104 @@
+﻿@model TixGurusWeb.Models.Event
+
+@{
+    string userName = Convert.ToString(Session["userName"]);
+    int userID = Convert.ToInt16(Session["userID"]);
+    bool isAdmin = Convert.ToBoolean(Session["isAdmin"]);
+}
+
+@{
+    ViewBag.Title = "Details";
+}
+@{
+    string ImageUrl = "";
+    if (Model.EventLocation.ToUpper().Contains("MUSEUM"))
+    {
+        if (Model.EventLocation.ToUpper().Contains("ART"))
+        {
+            ImageUrl = "~/Image/ArtMuseum.jpg";
+        }
+        else if (Model.EventLocation.ToUpper().Contains("SCIENCE"))
+        {
+            ImageUrl = "~/Image/ScienceMuseum.jpg";
+        }
+    }
+    else if (Model.EventLocation.ToUpper().Contains("STADIUM"))
+    {
+        ImageUrl = "~/Image/Stadium.jpg";
+    }
+    else if (Model.EventLocation.ToUpper().Contains("THEATRE") || Model.EventLocation.ToUpper().Contains("THEATER"))
+    {
+        ImageUrl = "~/Image/Theatre.jpg";
+    }
+    else if (Model.EventLocation.ToUpper().Contains("EXHIBITION"))
+    {
+        ImageUrl = "~/Image/Exhibition.jpg";
+    }
+    else if (Model.EventLocation.ToUpper().Contains("ENTERTAINMENT"))
+    {
+        ImageUrl = "~/Image/Entertainment.jpg";
+    }
+    this.ViewBag.ImageUrl = ImageUrl;
+}
+<h2>Event</h2>
+<hr />
+<div>
+    <img src="@Url.Content(ViewBag.ImageUrl)" alt="tbd" width="800" height="300" />
+</div>
+<hr />
+<div>
+    <h4>Event Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Event</dt>
+        @*<dt>@Html.DisplayNameFor(model => model.EventTitle)</dt>*@
+
+        <dd>
+            @Html.DisplayFor(model => model.EventTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BasePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BasePrice)
+        </dd>
+
+    </dl>
+</div>
+
+<p>    
+    @Html.ActionLink("Back to List", "Index")
+    @if (isAdmin)
+    {
+        @*@Html.ActionLink("Edit", "Edit", new { id = Model.EventID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.EventID })*@
+    }
+    else
+    { @Html.ActionLink("|  Book Ticket", "Book", new { id = Model.EventID })}
+</p>

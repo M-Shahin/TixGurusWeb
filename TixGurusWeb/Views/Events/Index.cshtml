@@ -1,0 +1,99 @@
+﻿@model IEnumerable<TixGurusWeb.Models.Event>
+@{
+    string userName = Convert.ToString(Session["userName"]);
+}
+@{
+    ViewBag.Title = "Events";
+}
+
+<h2>Events</h2>
+@if (Convert.ToBoolean(Session["isAdmin"]))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+@if (userName != null && userName == "")
+{
+    @*<p>@Html.Label("Please login to book ticket", new { style = "color:#ff0000" })</p>*@
+}
+
+@using (Html.BeginForm("Index", "Events", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.TextBox("search", null, new { @class = "form-control", placeholder = "Search Event..." })
+        </div>
+        <div class="col-md-3">
+            @Html.DropDownList("typeID", (SelectList)ViewBag.EventType, "-- Search By Event Type --", 
+                               new { @class = "form-control" })
+        </div>
+        <input type="submit" value="Search" />
+    </div>
+}
+
+<table class="table table-striped table-bordered" id="Events">
+    <thead class="bg-dark text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BasePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventType.TypeName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BasePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventType.TypeName)
+            </td>
+            @if (Convert.ToBoolean(Session["isAdmin"]))
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.EventID }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EventID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EventID })
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.EventID }) |
+                    @Html.ActionLink("Book Ticket", "Book", new { id = item.EventID })
+                </td>
+            }
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3fed9fa94b8940bf9b27b4340d0a8827" Name="Diagram1">
+        <EntityTypeShape EntityType="TixGurusDBModel.Booking" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TixGurusDBModel.Event" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TixGurusDBModel.EventType" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TixGurusDBModel.Seat" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TixGurusDBModel.SeatBooking" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TixGurusDBModel.User" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="TixGurusDBModel.FK_Booking_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="TixGurusDBModel.FK_Booking_SeatBooking" ManuallyRouted="false" />
+        <AssociationConnector Association="TixGurusDBModel.FK_Booking_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TixGurusDBModel.FK_Event_EventType" ManuallyRouted="false" />
+        <AssociationConnector Association="TixGurusDBModel.FK_SeatBooking_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="TixGurusDBModel.SeatSeatBooking" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

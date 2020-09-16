@@ -1,0 +1,41 @@
+﻿@model TixGurusWeb.Models.EventSeatBookingModel
+@{
+    ViewBag.Title = "Booking Confirm";
+}
+
+<h2>Congratulation, Booking Confirm</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>@Html.DisplayFor(model => model.EventDetails.EventTitle)</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <h4>Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Name</dt>
+            <dd>@Html.DisplayFor(model => model.DisplayName)</dd>
+            <dt>Event</dt>
+            <dd>@Html.DisplayFor(model => model.EventDetails.EventTitle)</dd>
+            <dt>Location</dt>
+            <dd>@Html.DisplayFor(model => model.EventDetails.EventLocation)</dd>
+            <dt>Date</dt>
+            <dd>@Html.DisplayFor(model => model.EventDetails.EventDate)</dd>
+            <dt>Description</dt>
+            <dd>@Html.DisplayFor(model => model.EventDetails.EventDescription)</dd>
+            @if (!Model.EventDetails.EventLocation.ToUpper().Contains("MUSEUM"))
+            {
+                <dt>Selected Seat</dt>
+                <dd>Level:@Html.DisplayFor(model => model.SelectedLevel) | Row:@Html.DisplayFor(model => model.SelectedRow) | Seat:@Html.DisplayFor(model => model.SeatNumber)</dd>
+            }
+            <dt>Ticket Price ($)</dt>
+            <dd>@Html.DisplayFor(model => model.ticketPrice)</dd>
+            <dt>Booking Date</dt>
+            <dd>@Html.DisplayFor(model => model.Booking.BookingDate)</dd>
+        </dl>
+    </div>
+}
